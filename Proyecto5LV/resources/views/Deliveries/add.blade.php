@@ -27,15 +27,4 @@
 		<button type="submit">Enviar</button>
 
 	</fieldset>
-
-
-
-</form>
-
-<form action="{{ route('index') }}">
-		<button type="submit">Ver</button>
-</form>
-
-<form action="{{ route('filter') }}">
-		<button type="submit">Filtrar</button>
 </form>

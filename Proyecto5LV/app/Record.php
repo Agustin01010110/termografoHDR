@@ -11,4 +11,5 @@ class Record extends Model
     {
       return $this->hasOne('App\Delivery','id');
     }
+    public $timestamps = false;
 }

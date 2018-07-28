@@ -9,7 +9,3 @@
 		<br>
 	</div>
 @endforeach
-
-<form action="{{ route('add') }}">
-		<button type="submit">Añadir</button>
-</form>
