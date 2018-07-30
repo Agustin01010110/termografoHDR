@@ -41,6 +41,8 @@
             <tr>
               <td>{{ $record->temp }}</td>
               <td>{{ $record->time }}</td>
+              <td>{{ $record->dev_name }}</td>
+              <td>{{ $record->delivery_id}}</td>
             </tr>
           @endforeach
         </tbody>

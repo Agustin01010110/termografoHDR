@@ -22,9 +22,10 @@ class RecordsController extends Controller
         $record = new App\Record;
         $record->time =  $request->time;
         $record->temp =  $request->temp;
-        $record->deviceName =  $request->deviceName;
-        $record->Id_dato =  $request->Id_dato;
-        $record->Id_viaje =  $request->Id_viaje;
+        $record->dev_name = $request->dev_name;
+        $record->id_dato = $request->id_dato;
+        $record->delivery_id =  "2";
+
         if($record->save())
           return "recibido!";
         else
