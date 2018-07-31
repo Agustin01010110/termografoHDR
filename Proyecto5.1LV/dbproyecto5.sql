@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-07-2018 a las 22:51:50
+-- Tiempo de generación: 31-07-2018 a las 07:05:13
 -- Versión del servidor: 5.7.14
 -- Versión de PHP: 7.0.10
 
@@ -30,12 +30,12 @@ USE `dbproyecto5`;
 
 CREATE TABLE `deliveries` (
   `id` int(11) NOT NULL,
-  `device_id` int(11) NOT NULL,
-  `start_loc` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `end_loc` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `start_date` datetime NOT NULL,
+  `device_id` int(11) DEFAULT NULL,
+  `start_loc` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `end_loc` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `start_date` datetime DEFAULT NULL,
   `end_date` datetime DEFAULT NULL,
-  `vehicle_id` int(11) NOT NULL
+  `vehicle_id` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -43,12 +43,10 @@ CREATE TABLE `deliveries` (
 --
 
 INSERT INTO `deliveries` (`id`, `device_id`, `start_loc`, `end_loc`, `start_date`, `end_date`, `vehicle_id`) VALUES
-(1, 1, 'BAHÍA BLANCA', 'PUNTA ALTA', '2018-07-23 05:19:00', '2018-07-24 05:19:00', 2),
-(2, 3, 'BAHÍA BLANCA', 'C.PRINGLES', '2018-07-23 20:21:00', '2018-07-23 20:21:00', 2),
-(3, 3, 'CÓRDOBA', 'C.DORREGO', '2018-07-23 05:19:00', NULL, 2),
-(4, 1, 'STA.FE', 'RESISTENCIA', '2018-07-23 05:19:00', NULL, 3),
-(5, 2, 'RESISTENCIA', 'STA.FE', '2018-07-31 05:19:00', NULL, 2),
-(6, 2, 'JUJUY', 'S.M.TUCUMAN', '2018-07-23 22:03:00', '2018-07-23 22:03:00', 2);
+(1, 1, 'CÓRDOBA', 'C.PRINGLES', '2018-07-31 10:31:31', '2018-07-31 22:31:31', 2),
+(2, 5, 'BAHÍA BLANCA', 'C.DORREGO', '2018-07-31 12:31:31', NULL, 1),
+(3, 3, 'STA.FE', 'S.M.TUCUMAN', '2018-07-31 13:31:31', NULL, 3),
+(4, 1, 'NEUQUEN', 'C.RIVADAVIA', '2018-08-01 07:31:31', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -59,17 +57,20 @@ INSERT INTO `deliveries` (`id`, `device_id`, `start_loc`, `end_loc`, `start_date
 CREATE TABLE `devices` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `active` tinyint(1) NOT NULL
+  `active` tinyint(1) NOT NULL,
+  `working` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `devices`
 --
 
-INSERT INTO `devices` (`id`, `name`, `active`) VALUES
-(1, 'APARATO-0001', 1),
-(2, 'APARATO-0002 ', 1),
-(3, 'APARATO-0003', 1);
+INSERT INTO `devices` (`id`, `name`, `active`, `working`) VALUES
+(1, 'APARATO-0001', 1, 1),
+(2, 'APARATO-0002 ', 0, 0),
+(3, 'APARATO-0003', 1, 1),
+(4, 'APARATO-0004', 0, 0),
+(5, 'APARATO-0005', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -83,13 +84,6 @@ CREATE TABLE `records` (
   `temp` float NOT NULL,
   `delivery_id` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `records`
---
-
-INSERT INTO `records` (`id`, `time`, `temp`, `delivery_id`) VALUES
-(1, '2018-07-23 20:22:00', 5, 2);
 
 -- --------------------------------------------------------
 
@@ -179,17 +173,17 @@ ALTER TABLE `vehicles`
 -- AUTO_INCREMENT de la tabla `deliveries`
 --
 ALTER TABLE `deliveries`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `devices`
 --
 ALTER TABLE `devices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `records`
 --
 ALTER TABLE `records`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `users`
 --

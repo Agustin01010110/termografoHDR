@@ -16,17 +16,6 @@ class DeliveriesController extends Controller
     	return view('Deliveries.index')->with(['deliveries'=>$deliveries]);
     }
 
-    public function form()
-    {
-      $vehicles = \App\Vehicle::all();
-      $devices = \App\Device::all();
-
-      return view('Deliveries.add')->with([
-        'vehicles'=>$vehicles,
-        'devices'=>$devices,
-      ]);
-    }
-
     public function store(Request $request)
     {
     	$ndel = new \App\Delivery;
@@ -37,62 +26,58 @@ class DeliveriesController extends Controller
     	$ndel->vehicle_id =  $request->vehicle_id;
     	$ndel->device_id =  $request->device_id;
 
-      if($ndel->save())
-    		return view('Deliveries.add')->with("recibido!");
+    	if($ndel->save())
+    		return "recibido!";
     	else
-    		return view('Deliveries.add')->with("no recibido");
+    		return "no recibido";
     }
 
-    public function change()
+
+    public function form()
     {
-      $deliveries =  \App\Delivery::all();
-      return view('Deliveries.edit')->with(['deliveries' => $deliveries]);
+    	$vehicles = \App\Vehicle::all();
+    	$devices = \App\Device::all();
+
+    	return view('Deliveries.add')->with([
+    		'vehicles'=>$vehicles,
+    		'devices'=>$devices,
+    	]);
     }
 
-    public function edit(Request $request)
+
+    public function fillDeliveryData($device_id)
     {
-      $delivery =  \App\Delivery::where('id',$request->delivery_id)->get();
-      $delivery->end_date = $request->end_date;
-      if($delivery->save())
-        return view('Deliveries.edit')->with('viaje editado');
-      else
-        return view('Deliveries.edit')->with('viaje NO editado');
+
+        $delivery = \App\Delivery::emptyData()->where('device_id',$device_id)->first();
+        $vehicles = \App\Vehicle::all();
+
+        return view('Deliveries.fill_data')->with([
+            'delivery'=> $delivery,
+            'vehicles'=> $vehicles
+        ]);
     }
 
-    public function erase()
+    public function setDeliveryData(Request $request)
     {
-      $deliveries =  \App\Delivery::all();
-      return view('Deliveries.delete')->with(['deliveries' => $deliveries]);
+        $delivery = \App\Delivery::where('id',$request->id)->first();
+        $device   = \App\Device::where('id',$delivery->device_id)->first();
+
+        try
+        {
+
+            $delivery->start_loc       = $request->start_loc;
+            $delivery->end_loc         = $request->end_loc;
+            $delivery->vehicle_id      = $request->vehicle_id;
+            $device->working           = 1;
+
+            $delivery->save();
+            $device->save();
+
+            return redirect('monitoring')->with('message', 'SUCCESS');
+        }
+        catch(\Exception $e)
+        {
+            echo $e->getMessage();
+        }
     }
-
-    public function delete(Request $request)
-    {
-      $delivery =  \App\Delivery::where('id',$request->delivery_id)->get();
-      if($delivery->delete())
-        return view('Deliveries.delete')->with('viaje eliminado');
-      else
-        return view('Deliveries.delete')->with('viaje NO eliminado');
-    }
-    
-    public function filter()
-    {
-      $devices = \App\Device::all();
-      return view('filter.filter')->with(['devices'=> $devices]);
-    }
-    public function filterBy(Request $request)
-    {
-      $devices = \App\Device::all();
-      $filter = \App\Delivery::whereBetween('start_date',[$request->from,$request->to])
-                                ->where('device_id','=',$request->device_id)
-                                ->get();
-      return view('filter.filter')->with(['filters' => $filter])->with(['devices'=> $devices]);
-    }
-
-
-
-
-
-
-
-
 }

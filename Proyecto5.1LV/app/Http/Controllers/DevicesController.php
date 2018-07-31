@@ -8,137 +8,86 @@ class DevicesController extends Controller
 {
     //
 
-    public function fetch()
+
+    public function setDevice(Request $request)
     {
-      $devices = \App\Device::all();
-      return view('Devices.index')->with(['devices' => $devices]);
-    }
+        $exist = \App\Device::where('name',$request->name)->count();
 
-    public function form()
-    {
-      return view('Devices.add');
-    }
+        $delivery = new \App\Delivery;
 
-    // public function store(Request $request)
-    // {
-    //   $exist = \App\Device::where('name', $request->name)->first();
-    //   if($exist)//pregunto si existe en la DB. si existe lo activo
-    //   {
-    //     if($exist->active === 0)
-    //     {
-    //         $exist->active = 1;
-    //     }
-    //     $exist->save();
-    //   }
-    //   else//sino existe lo agrego y lo pongo como activo
-    //   {
-    //     $ndev = new \App\Device;
-    //     $ndev->name = $request->name;
-    //     $ndev->active = 1;
-    //
-    //     if($ndev->save())
-    //       return  view('dash')->with('disp.guardado');
-    //     else
-    //       return view('dash')->with('disp. NO guardado');
-    //
-    //   }
-    //   return view('dash');
-    //
-    // }
-
-    public function store(Request $request)
-    {
-      $ndev = new \App\Device;
-      $ndev->name = $request->devicename;
-
-      if($request->active)
-      {
-        $ndev->active = 1;
-      }
-      else
-      {
-        $ndev->active = 0;
-      }
-
-
-      if($ndev->save())
-        return  view('Devices.add')->with('disp.guardado');
-      else
-        return view('Devices.add')->with('disp. NO guardado');
-    }
-
-    public function updateDev(Request $request)
-    {
-      $lastId = \App\Device::all()->last()->id;
-
-      if($request->ajax())
-      {
-
-        if( $request->lastId < $lastId )
+        // si el dispositivo esta en DB
+        if($exist)
         {
+            $device = \App\Device::where('name',$request->name)->first();
+            $device->active = 1;
 
-          $nDev = \App\Device::where('id', $lastId)->get();
-          $data = ['new'=>true,'newDev'=>$nDev,'lastId'=>$lastId];
+            try{
 
-        }else
-        {
-          $data = ['new'=>false, 'newDev'=>[],'lastId'=>$lastId];
+                $delivery->device_id = $device->id;
+                $delivery->start_date = $request->start_date;
+
+
+                $device->save();
+                $delivery->save();
+
+                echo $delivery->id;
+            }
+            catch(\Exception $e){
+                echo 'ERROR: ';
+                echo $e->getMessage();
+            }
+        }// si el dispositivo es nuevo
+        else {
+
+
+            try{
+                $ndevice = new \App\Device;
+
+                $ndevice->name = $request->name;
+                $ndevice->active = 1;
+                $ndevice->working = 0;
+                $ndevice->save();
+
+                $delivery->device_id = $ndevice->id;
+                $delivery->start_date = $request->start_date;
+
+                $delivery->save();
+
+
+                echo $delivery->id;
+            }
+            catch(\Exception $e){
+                echo 'ERROR: ';
+                echo $e->getMessage();
+            }
+
         }
 
-        echo json_encode($data);
-      }
-    }
-    public function change()
-    {
-      $devices = \App\Device::all();
-
-      return view('Devices.edit')->with([
-        'devices'=>$devices,
-      ]);
     }
 
-    public function edit(Request $request)
+    public function setDeviceOff(Request $request)
     {
-      $devices = \App\Device::all();
-      $eddevice = \App\Device::where('id', $request->device_id)->first();
-      if($request->active)
-      {
-          $eddevice->active = 1;
-      }
-      else {
-            $eddevice->active = 0;
-      }
-    /// como le cambio el parametro sin generar un nuevo dispositivo?
-      if($eddevice->save())
-      {
-        return view('Devices.edit')->with(['devices'=>$devices])->with('editado');
-      }
-      else
-      {
-        return view('Devices.edit')->with(['devices'=>$devices])->with('NO editado');
-      }
+        $device = \App\Device::where('name',$request->name)->first();
+        $delivery = \App\Delivery::where('device_id',$device->id)->first();
+
+        try{
+            $device->active = 0;
+            $device->working = 0;
+
+            $delivery->end_date = $request->end_date;
+
+            $device->save();
+            $delivery->save();
+
+            echo 'SUCCESS';
+        }
+        catch(\Exception $e){
+            echo 'ERROR: ';
+            echo $e->getMessage();
+        }
+
     }
 
-    public function erase()
-    {
-      $devices = \App\Device::all();
 
-      return view('Devices.delete')->with([
-        'devices'=>$devices,
-      ]);
-    }
-    public function delete(Request $request)
-    {
-      $devices = \App\Device::all();
-      $deldevice = \App\Device::where('id', $request->device_id);
-      if($deldevice->delete())
-      {
-        return view('Devices.delete')->with(['devices'=>$devices])->with('borrado');
-      }
-      else
-      {
-        return view('Devices.delete')->with(['devices'=>$devices])->with('NO borrado');
-      }
-    }
 
 }
