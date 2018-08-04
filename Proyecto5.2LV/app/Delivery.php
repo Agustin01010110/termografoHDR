@@ -27,6 +27,11 @@ class Delivery extends Model
         return $query->where('end_date',null)->where('start_loc','!=',null);
     }
 
+    public function scopeDone($query)
+    {
+      return $query->where('end_date','!=',null);
+    }
+
     //obtener los viajes que se estan realizando
     public function scopeEmptyData($query)
     {

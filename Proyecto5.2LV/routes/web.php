@@ -31,3 +31,9 @@ Route::get('deliveries/set-delivery-data','DeliveriesController@setDeliveryData'
 Route::get('monitoring/','MonitoringCenterController@index')->name('monitoring-center');
 Route::get('monitoring/{delivery_id}','MonitoringCenterController@index')->name('monitoring-center-for');
 Route::get('monitoring-device/{device_id}','MonitoringCenterController@device')->name('monitoring-center-for-device');
+
+Route::get('records/store', 'RecordsController@store');
+
+Route::get('history', 'DeliveriesController@history')->name('delivery-history');
+Route::get('history/fetchBetweenDates', 'DeliveriesController@fetchBetweenDates')->name('fetch-between-dates');
+Route::get('history/{id}', 'DeliveriesController@search')->name('search-deliveries-for-history');
