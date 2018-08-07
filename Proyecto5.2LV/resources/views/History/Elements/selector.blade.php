@@ -1,25 +1,16 @@
 <select name="switch" id="switch">
-    <option value="menu1">Servicios</option>
-    <option value="menu2">Camiones</option>
-    <option value="menu3">Dispositivos</option>
+    <option value="menu1">Camiones</option>
+    <option value="menu2">Dispositivos</option>
 </select>
 <button id="changeMenu">Ver</button>
 
-<div data-menu="menu1" >
-    @include('MonitoringCenter.Elements.list_ended_deliveries',['endedDeliveries'=>$endedDeliveries])
+<div data-menu="menu1">
+    @include('MonitoringCenter.Elements.list_vehicles',['vehicles'=>$vehicles])
     <br>
 </div>
-<div data-menu="menu3" class="menu-item">
-    @include('MonitoringCenter.Elements.list_devices_working',['activeDevices'=>$activeDevices])
-    <br>
-</div>
-<div data-menu="menu3" class="menu-item">
 
-    @include('MonitoringCenter.Elements.list_devices_not_working',['devicesNotWorking'=>$devicesNotWorking])
-    <br>
-</div>
 <div data-menu="menu2" class="menu-item">
-    @include('MonitoringCenter.Elements.list_vehicles_working',['activeDeliveries'=>$activeDeliveries])
+    @include('MonitoringCenter.Elements.list_devices',['devices'=>$devices])
 </div>
 @isset($records)
     @isset($current_delivery)

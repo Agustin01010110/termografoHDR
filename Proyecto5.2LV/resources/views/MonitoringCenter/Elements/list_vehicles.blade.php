@@ -1,9 +1,14 @@
-SERVICIOS ACTIVOS <br>
+VEHICULOS <br>
 
-@if(count($activeDeliveries))
-    @foreach ($activeDeliveries as $delivery)
-        <a href="{{ route('monitoring-center-for', $delivery->id ) }}"> {{ $delivery->service_name }} </a> <br>
+@if(count($vehicles))
+<div class="col-sm-6">
+  <label for="exampleFormControlSelect2">Elija el vehiculo</label>
+  <select multiple class="form-control" id="exampleFormControlSelect2">
+    @foreach ($vehicles as $vehicle)
+      <option value="{{$vehicle->id}}">{{$vehicle->name}}</option>
     @endforeach
+  </select>
+</div>
 @else
-    No hay viajes activos <br>
+    No hay viajes del vehiculo seleccionado <br>
 @endif

@@ -1,13 +1,13 @@
 @extends('layouts.app')
 @section('content')
 
-<form class="col-sm-6" action="{{ route('fetch-between-dates') }}" method="get" onsubmit = "false">
+<form class="col-sm-6" action="{{ route('fetch-between-dates', $vehicles->id, $devices->id) }}" method="get" onsubmit = "false">
 
   <fieldset>
     <legend>Historial</legend>
     <h6>Ingrese mes y año del viaje</h6>
 
-    <input type="text" id="datepicker1" />
+    <input type="text" id="datepicker1" name="year"/>
     <script type="text/javascript">
           $("#datepicker1").datepicker( {
             format: " yyyy", // Notice the Extra space at the beginning
@@ -16,7 +16,7 @@
           });
     </script>
     <br>
-    <input type="text" id="datepicker2" />
+    <input type="text" id="datepicker2" name="month"/>
     <script type="text/javascript">
           $("#datepicker2").datepicker( {
             format: "mm", // Notice the Extra space at the beginning
@@ -25,21 +25,14 @@
             pickyears: false
           });
     </script>
-
-      <div class="class=col-sm-6">
-        <select class="" name="device_id">
-            @foreach($devices as $device)
-                <option value="{{$device->id}}">{{$device->name}}</option>
-            @endforeach
-        </select>
-      </div>
+@include('History.Elements.selector', ['devices' => $devices, 'vehicles' => $vehicles])
 
       <button type="submit" class="btn btn-primary">Buscar</button>
     </div>
   </fieldset>
 </form>
 
-@include(Elements.selector)
+
 
 
 @isset($deliveries)

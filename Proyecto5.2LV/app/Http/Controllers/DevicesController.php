@@ -7,7 +7,11 @@ use Illuminate\Http\Request;
 class DevicesController extends Controller
 {
     //
-
+    public function fetch()
+    {
+      $devices = \App\Device::all();
+      return view('History.index')->with(['devices' => $devices]);
+    }
 
     public function setDevice(Request $request)
     {

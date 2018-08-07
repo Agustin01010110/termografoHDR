@@ -18,7 +18,7 @@ class VehiclesController extends Controller
     {
     	$vehicles = \App\Vehicle::all();
 
-    	return view('Vehicles.index')->with(['vehicles'=>$vehicles]);
+    	return view('History.index')->with(['vehicles'=>$vehicles]);
     }
 
 }

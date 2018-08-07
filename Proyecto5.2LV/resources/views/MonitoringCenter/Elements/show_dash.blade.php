@@ -32,9 +32,9 @@
     var endDate = new Date( "{{ $records->last()->time }}")
     var date = startDate.getTime()
     var hc = Highcharts.stockChart('container',{
-        rangeSelector: {
-            selected: 2
-        },
+      rangeSelector: {
+
+          },
 
         title: {
             text: 'Temperatura'
@@ -52,8 +52,8 @@
         },
         series: [{
             name: 'Temperatura',
-            pointStart: date,
-            pointInterval: 60 * 1000,
+            pointStart: date-10800000,
+            pointInterval: 60 * 10000,
             data: data1,
             tooltip: {
                 valueDecimals: 2

@@ -53,7 +53,7 @@ class DeliveriesController extends Controller
     }
 
 
-    public function fillDeliveryData($device_id)
+    public function fillDeliveryData($device_id)//ya se inicializo un viaje
     {
 
         $delivery = \App\Delivery::emptyData()->where('device_id',$device_id)->first();
@@ -92,36 +92,41 @@ class DeliveriesController extends Controller
     public function history()
     {
       $devices = \App\Device::all();
-      return view('History.index')->with(['devices'=>$devices]);
+      $vehicles = \App\Vehicle::all();
+      return view('History.index')->with(['devices'=>$devices, 'vehicles' => $vehicles]);
     }
-    public function fetchBetweenDates(Request $request, $records = null)
+    public function fetchBetweenDates(Request $request)
     {
-
       $devices = \App\Device::all();
-      $deliveries = \App\Delivery::done()->whereBetween('start_date',[$request->from,$request->to])
-                                                ->where('device_id',$request->device_id)
-                                                ->get();
+      if($request->vehicle)
+      {
 
-      if( $records )
+        $deliveries = \App\Delivery::done()->whereYear('start_date',$request->year)
+                                           ->whereMonth('start_date',$request->month)
+                                           ->where('vehicle_id',$request->vehicle)
+                                           ->get();
+      }
+      if($request->device)
       {
-        return view('History.index')->with(['deliveries' => $deliveries,
-                                                    'devices' => $devices,
-                                                    'records' => $records]);
-      }else
-      {
-        return view('History.index')->with(['deliveries' => $deliveries,
-                                                    'devices' => $devices]);
+        $deliveries = \App\Delivery::done()->whereYear('start_date',$request->year)
+                                           ->whereMonth('start_date',$request->month)
+                                           ->where('device_id',$request->device)
+                                           ->get();
       }
 
+        return view('History.index')->with(['deliveries' => $deliveries,
+                                               'devices' => $devices]);
+
+
 
     }
 
-    public function search($id)
-    {
-        $records = \App\Record::where('delivery_id', $id)->get();
-
-        return view('fetch-between-dates')->with(['records'=>$records]);
-    }
+    // public function search($id)
+    // {
+    //     $records = \App\Record::where('delivery_id', $id)->get();
+    //
+    //     return view('fetch-between-dates')->with(['records'=>$records]);
+    // }
 
 
 
