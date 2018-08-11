@@ -10,13 +10,13 @@
         <a class="nav-link" href="{{ route('delivery-history') }}">Historial</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="">Ubicacion</a>
+        <a class="nav-link" href="#">Ubicacion</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="">Nosotros</a>
+        <a class="nav-link" href="{{ route( 'about-us' ) }}">Nosotros</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="">Contacto</a>
+        <a class="nav-link" href="{{ route( 'contact-us' ) }}">Contacto</a>
       </li>
     </ul>
     <ul class="navbar-nav float-right">

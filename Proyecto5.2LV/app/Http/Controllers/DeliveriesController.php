@@ -88,45 +88,57 @@ class DeliveriesController extends Controller
             echo $e->getMessage();
         }
     }
-
     public function history()
     {
       $devices = \App\Device::all();
       $vehicles = \App\Vehicle::all();
-      return view('History.index')->with(['devices'=>$devices, 'vehicles' => $vehicles]);
+      $deliveries = \App\Delivery::done()->get();
+      return view('History.index')->with(['devices'    => $devices,
+                                          'vehicles'   => $vehicles,
+                                          'deliveries' => $deliveries]);
     }
+
+
     public function fetchBetweenDates(Request $request)
     {
       $devices = \App\Device::all();
-      if($request->vehicle)
-      {
+      $vehicles = \App\Vehicle::all();
 
-        $deliveries = \App\Delivery::done()->whereYear('start_date',$request->year)
-                                           ->whereMonth('start_date',$request->month)
-                                           ->where('vehicle_id',$request->vehicle)
-                                           ->get();
-      }
-      if($request->device)
-      {
-        $deliveries = \App\Delivery::done()->whereYear('start_date',$request->year)
-                                           ->whereMonth('start_date',$request->month)
-                                           ->where('device_id',$request->device)
-                                           ->get();
-      }
 
-        return view('History.index')->with(['deliveries' => $deliveries,
-                                               'devices' => $devices]);
 
+        if(request()->input('vehicle'))
+        {
+          $deliveries = \App\Delivery::done()->whereBetween('start_date',[$request->from, $request->to])
+                                             ->where('vehicle_id',$request->vehicle)
+                                             ->get();
+
+        }
+        else
+        {
+          $deliveries = \App\Delivery::done()->whereBetween('start_date',[$request->from, $request->to])
+                                             ->where('device_id',$request->device)
+                                             ->get();
+        }
+
+
+
+
+      return view('History.index')->with(['deliveries' => $deliveries,
+                                               'devices' => $devices,
+                                              'vehicles' => $vehicles]);
 
 
     }
 
-    // public function search($id)
-    // {
-    //     $records = \App\Record::where('delivery_id', $id)->get();
-    //
-    //     return view('fetch-between-dates')->with(['records'=>$records]);
-    // }
+
+
+
+    public function search($id)
+    {
+        $records = \App\Record::where('delivery_id', $id)->get();
+        $service = \App\Delivery::where('id', $id)->first();
+        return view('MonitoringCenter.Elements.show_dash')->with(['records'=>$records, 'service' => $service]);
+    }
 
 
 

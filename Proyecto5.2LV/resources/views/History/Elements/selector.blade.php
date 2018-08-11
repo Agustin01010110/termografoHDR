@@ -12,6 +12,10 @@
 <div data-menu="menu2" class="menu-item">
     @include('MonitoringCenter.Elements.list_devices',['devices'=>$devices])
 </div>
+
+
+
+
 @isset($records)
     @isset($current_delivery)
 

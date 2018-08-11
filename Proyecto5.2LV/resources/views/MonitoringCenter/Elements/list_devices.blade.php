@@ -2,12 +2,10 @@ DISPOSITIVOS <br>
 
 @if(count($devices))
 <div class="col-sm-6">
-  <label for="exampleFormControlSelect3">Elija el dispositivo</label>
-  <select multiple class="form-control" id="exampleFormControlSelect3">
+  <label for="">Elija el dispositivo</label><br>
     @foreach ($devices as $device)
-      <option>{{$device->name}}</option>
+      <a href="#">{{ $device->name }}</a> <br>
     @endforeach
-  </select>
 </div>
 @else
     No hay viajes del dispositivo seleccionado <br>

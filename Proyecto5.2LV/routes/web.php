@@ -36,4 +36,12 @@ Route::get('records/store', 'RecordsController@store');
 
 Route::get('history', 'DeliveriesController@history')->name('delivery-history');
 Route::get('history/fetchBetweenDates', 'DeliveriesController@fetchBetweenDates')->name('fetch-between-dates');
-// Route::get('history/{id}', 'DeliveriesController@search')->name('search-deliveries-for-history');
+Route::get('history/search/{id}', 'DeliveriesController@search')->name('search-records-for-history');
+
+Route::get('/contact', function(){
+  return view('Contact.contact');
+})->name('contact-us');
+
+Route::get('/about', function(){
+  return view('About.about');
+})->name('about-us');
