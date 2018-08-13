@@ -35,6 +35,7 @@
           @endif
         @endforeach
     ];
+
     var lastId = {{ $records->last()->id }}
     var startDate = new Date( "{{ $records->first()->time }}")
     var endDate = new Date( "{{ $records->last()->time }}")
@@ -61,7 +62,7 @@
         series: [{
             name: 'Temperatura',
             pointStart: date-10800000,
-            pointInterval: 60 * 10000,
+            pointInterval: (60 * 1000)*{{ $sampleInterval }},
             data: data1,
             tooltip: {
                 valueDecimals: 2
@@ -86,7 +87,7 @@
   <tbody>
     @foreach($records as $record)
     <tr>
-      <td>{{$record->id}}</td>
+      <td>{{$record->id_data}}</td>
       <td>{{$record->temp}}</td>
       <td>{{$record->time}}</td>
     </tr>

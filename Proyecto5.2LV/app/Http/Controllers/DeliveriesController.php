@@ -73,9 +73,13 @@ class DeliveriesController extends Controller
         try
         {
 
-            $delivery->start_loc       = $request->start_loc;
-            $delivery->end_loc         = $request->end_loc;
-            $delivery->vehicle_id      = $request->vehicle_id;
+            $delivery->start_loc          = $request->start_loc;
+            $delivery->end_loc            = $request->end_loc;
+            $delivery->vehicle_id         = $request->vehicle_id;
+            $delivery->mode               = $request->mode;
+            $delivery->sample_time        = $request->sample_time;
+            $delivery->updt_time          = $request->updt_time;
+
             $device->working           = 1;
 
             $delivery->save();
@@ -137,11 +141,20 @@ class DeliveriesController extends Controller
     {
         $records = \App\Record::where('delivery_id', $id)->get();
         $service = \App\Delivery::where('id', $id)->first();
-        return view('MonitoringCenter.Elements.show_dash')->with(['records'=>$records, 'service' => $service]);
+        return view('MonitoringCenter.Elements.show_dash')->with(['records'=>$records, 'service' => $service, 'sampleInterval' => $service->sample_time]);
     }
 
+//tomo el ultimo viaje creado y retorno la configuracion de modo y toma de muestras
+    public function config()
+    {
+      $last_delivery_config = \App\Delivery::all()->last();
+      $config = ['mode'     =>$last_delivery_config->mode,
+                 'samples'  =>$last_delivery_config->sample_time,
+                 'update'   =>$last_delivery_config->updt_time
+               ];
 
-
+      return $config;
+    }
 
 
 

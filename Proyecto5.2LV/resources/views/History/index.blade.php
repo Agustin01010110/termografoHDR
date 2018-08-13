@@ -107,7 +107,7 @@
 
 
 
-@isset($records)
+<!-- @isset($records)
   @if(count($records))
     Muestras del viaje:
       @include('MonitoringCenter.Elements.show_dash',['records'=>$records])
@@ -116,4 +116,4 @@
   @endif
 @endisset
 
-@endsection
+@endsection -->

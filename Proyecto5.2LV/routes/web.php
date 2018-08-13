@@ -38,6 +38,8 @@ Route::get('history', 'DeliveriesController@history')->name('delivery-history');
 Route::get('history/fetchBetweenDates', 'DeliveriesController@fetchBetweenDates')->name('fetch-between-dates');
 Route::get('history/search/{id}', 'DeliveriesController@search')->name('search-records-for-history');
 
+Route::get('/config','DeliveriesController@config')->name('config');
+
 Route::get('/contact', function(){
   return view('Contact.contact');
 })->name('contact-us');
