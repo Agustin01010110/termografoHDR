@@ -13,10 +13,19 @@ setInterval(function(){
 
 
 					lastId = response.lastId;
+					if(newRows.temp > 5)
+					{
+						function myFunction() {
+								var btn = document.createElement("BUTTON");
+								var t = document.createTextNode("CLICK ME");
+								btn.appendChild(t);
+								document.body.appendChild(btn);
+						}
+					}
+
+
 					data1.push(newData);//sirve para varios elementos tambien
-
 					hc.series[0].setData(data1, false);//setData() deberia redibujar el grafico
-
 					console.log('Datos Nuevos!');
 					hc.redraw();
 				}else

@@ -35,5 +35,29 @@ class RecordsController extends Controller
       }
 
 
+    	public function updateChart(Request $request)
+    	{
+
+        $lastId = \App\Record::all()->last()->id;
+        if($request->ajax())
+        {
+
+    			if( $request->lastId < $lastId )
+    			{
+
+            $records = \App\Record::whereBetween('id',[$request->lastId, $lastId])->get();
+    				$data = ['newRows'=>true,'newRecords'=>$records,'lastId'=>$lastId];
+
+    			}else
+    			{
+    				$data = ['newRows'=>false,'newRecords'=>[],'lastId'=>$lastId];
+
+    			}
+
+    			echo json_encode($data);
+    		}
+
+
+    	}
 
 }

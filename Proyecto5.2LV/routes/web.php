@@ -47,3 +47,5 @@ Route::get('/contact', function(){
 Route::get('/about', function(){
   return view('About.about');
 })->name('about-us');
+
+Route::get('nuevaruta','RecordsController@updateChart')->name('nr');
