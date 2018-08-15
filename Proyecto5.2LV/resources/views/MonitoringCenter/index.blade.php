@@ -44,11 +44,15 @@
             <div style="text-align:center">
                 <h2 style="text-align:center">DATOS PARA ESTE SERVICIO </h2>
 
-                @include('MonitoringCenter.Elements.show_dash',['records'=>$records, 'sampleInterval' => $current_delivery->sample_time])
+                @include('MonitoringCenter.Elements.show_dash',['records'=>$records, 'sampleInterval' => $current_delivery->sample_time, 'service' => $current_delivery])
             </div>
         @endisset
     @endisset
 @endsection
+
+
+
+
 
 @section('scripts')
     <script>
