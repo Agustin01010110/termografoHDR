@@ -43,8 +43,12 @@
 
             <div style="text-align:center">
                 <h2 style="text-align:center">DATOS PARA ESTE SERVICIO </h2>
-
-                @include('MonitoringCenter.Elements.show_dash',['records'=>$records, 'sampleInterval' => $current_delivery->sample_time, 'service' => $current_delivery])
+                @if(count($records) >= 2)
+                  <?php         $der = ($lastRec->temp - $befLast[0]->temp)/($current_delivery->sample_time); ?>
+                  @include('MonitoringCenter.Elements.show_dash',['records'=>$records, 'sampleInterval' => $current_delivery->sample_time, 'service' => $current_delivery, 'der' => $der])
+                @else
+                  @include('MonitoringCenter.Elements.show_dash',['records'=>$records, 'sampleInterval' => $current_delivery->sample_time, 'service' => $current_delivery])
+                @endif  
             </div>
         @endisset
     @endisset

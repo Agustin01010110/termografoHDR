@@ -50,20 +50,32 @@ class MonitoringCenterController extends Controller
         $devicesNotWorking = \App\Device::notWorking()->get();
         $devices = \App\Device::working()->get();
 
-
         $data = [
-            'activeDeliveries'=>$activeDeliveries,
-            'devicesNotWorking'=>$devicesNotWorking,
-            'activeDevices'=>$devices
+            'activeDeliveries'  =>  $activeDeliveries,
+            'devicesNotWorking' =>  $devicesNotWorking,
+            'activeDevices'     =>  $devices
         ];
 
         if($delivery_id)
         {
 
+
+
+
             $records = \App\Record::where('delivery_id',$delivery_id)->get();
+            if(count($records) >= 2)
+            {
+              $lastRec = \App\Record::where('delivery_id', $delivery_id)->orderBy('id', 'desc')->first();
+              $befLast = \App\Record::where('delivery_id', $delivery_id)->orderBy('id', 'desc')->skip(1)->take(1)->get();
+              print_r($lastRec->temp);
+              print_r($befLast[0]->temp);
+              $data['lastRec'] = $lastRec;
+              $data['befLast'] = $befLast;
+            }
             $data['records'] = $records;
             $del = \App\Delivery::working()->where('id',$delivery_id)->first();
             $data['current_delivery'] = $del;
+
         }
 
         return view('MonitoringCenter.index')->with($data);

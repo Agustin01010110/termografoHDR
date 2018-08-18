@@ -103,8 +103,15 @@
               <li class="list-group-item"><strong>Lim. temperatura:</strong> 8°</li>
             @endif
             <li class="list-group-item"><strong>Descripcion:</strong>embutidos</li>
-            <li class="list-group-item"><strong>Tpo.actualizacion:</strong> {{ $service->updt_time }} minutos</li>
-            <li class="list-group-item"><strong>Tpo.muestreo:</strong> {{ $service->sample_time }} minutos</li>
+            <li class="list-group-item"><strong>Tpo.actualizacion:</strong> {{ $service->updt_time }} [min.]</li>
+            <li class="list-group-item"><strong>Tpo.muestreo:</strong> {{ $service->sample_time }} [min.]</li>
+            @if(isset($hty))
+              <li class="list-group-item"><strong>Variacion:</strong> NA [°/min.]</li>
+            @else
+              <li class="list-group-item"><strong>Variacion:</strong>{{ $der }} [°/min.]</li>
+            @endif
+
+
           </ul>
         </div>
         <div class="col-sm">

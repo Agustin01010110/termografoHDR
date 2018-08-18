@@ -110,7 +110,7 @@ class DeliveriesController extends Controller
 
 
 
-        if(request()->input('vehicle'))
+        if(request()->input('vehicle') == NULL)
         {
           $deliveries = \App\Delivery::done()->whereBetween('start_date',[$request->from, $request->to])
                                              ->where('vehicle_id',$request->vehicle)
@@ -124,7 +124,7 @@ class DeliveriesController extends Controller
                                              ->get();
         }
 
-
+        print_r($deliveries);
 
 
       return view('History.index')->with(['deliveries' => $deliveries,
@@ -141,7 +141,13 @@ class DeliveriesController extends Controller
     {
         $records = \App\Record::where('delivery_id', $id)->get();
         $service = \App\Delivery::where('id', $id)->first();
-        return view('MonitoringCenter.Elements.show_dash')->with(['records'=>$records, 'service' => $service, 'sampleInterval' => $service->sample_time]);
+        $hty = 1;
+
+        return view('MonitoringCenter.Elements.show_dash')->with(['records'        => $records,
+                                                                  'service'        => $service,
+                                                                  'sampleInterval' => $service->sample_time,
+                                                                  'hty'            => $hty
+                                                                  ]);
     }
 
 //tomo el ultimo viaje creado y retorno la configuracion de modo y toma de muestras
