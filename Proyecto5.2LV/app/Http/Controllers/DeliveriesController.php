@@ -101,7 +101,15 @@ class DeliveriesController extends Controller
                                           'vehicles'   => $vehicles,
                                           'deliveries' => $deliveries]);
     }
-
+    public function location()
+    {
+      $devices = \App\Device::all();
+      $vehicles = \App\Vehicle::all();
+      $activeDeliveries = \App\Delivery::working()->get();
+      return view('Location.index')->with(['devices'    => $devices,
+                                          'vehicles'   => $vehicles,
+                                          'activeDeliveries' => $activeDeliveries]);
+    }
 
     public function fetchBetweenDates(Request $request)
     {

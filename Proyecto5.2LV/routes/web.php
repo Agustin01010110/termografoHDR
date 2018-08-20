@@ -35,6 +35,7 @@ Route::get('monitoring-device/{device_id}','MonitoringCenterController@device')-
 Route::get('records/store', 'RecordsController@store');
 
 Route::get('history', 'DeliveriesController@history')->name('delivery-history');
+Route::get('location', 'DeliveriesController@location')->name('delivery-location');
 Route::get('history/fetchBetweenDates', 'DeliveriesController@fetchBetweenDates')->name('fetch-between-dates');
 Route::get('history/search/{id}', 'DeliveriesController@search')->name('search-records-for-history');
 

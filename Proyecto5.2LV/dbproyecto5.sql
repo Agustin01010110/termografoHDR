@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-08-2018 a las 07:18:16
+-- Tiempo de generación: 20-08-2018 a las 07:40:28
 -- Versión del servidor: 10.1.32-MariaDB
 -- Versión de PHP: 7.2.5
 
@@ -51,7 +51,7 @@ INSERT INTO `deliveries` (`id`, `device_id`, `start_loc`, `end_loc`, `start_date
 (3, 3, 'STA.FE', 'S.M.TUCUMAN', '2018-07-31 13:31:31', NULL, 3, 'supercongelado', 1, 30),
 (4, 1, 'NEUQUEN', 'C.RIVADAVIA', '2018-08-01 07:31:31', NULL, 2, 'congelado', 0.5, 30),
 (5, 1, 'C.PRINGLES', 'BAHIA BLANCA', '2018-08-01 05:00:00', '2018-08-02 06:00:00', 2, 'refrigerado', 1, 20),
-(6, 2, 'BAHIA BLANCA', 'PIGUE', '2018-08-01 06:15:11', '2018-08-01 09:00:00', 2, 'refrigerado', 0.5, 5),
+(6, 2, 'BAHIA BLANCA', 'PIGUE', '2018-08-01 06:15:11', '2018-08-01 09:00:00', 1, 'refrigerado', 0.5, 5),
 (8, 2, 'BARILOCHE', 'NEUQUEN', '2018-08-13 08:00:00', NULL, 1, 'refrigerado', 0.5, 10);
 
 -- --------------------------------------------------------
@@ -89,27 +89,30 @@ CREATE TABLE `records` (
   `time` datetime NOT NULL,
   `temp` float NOT NULL,
   `delivery_id` int(11) NOT NULL,
-  `id_data` int(11) NOT NULL
+  `id_data` int(11) NOT NULL,
+  `latitude` float DEFAULT NULL,
+  `longitude` float DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `records`
 --
 
-INSERT INTO `records` (`id`, `time`, `temp`, `delivery_id`, `id_data`) VALUES
-(1, '2018-08-01 10:00:00', 1.352, 2, 1),
-(2, '2018-08-01 10:10:00', 1.352, 2, 2),
-(3, '2018-08-01 10:20:00', 3.352, 2, 3),
-(4, '2018-08-01 10:30:00', 2.652, 2, 4),
-(5, '2018-08-01 10:40:00', 1.352, 2, 5),
-(6, '2018-08-01 10:50:00', 3.352, 2, 6),
-(7, '2018-08-01 11:00:00', 2.652, 2, 7),
-(8, '2018-08-01 10:30:00', 2.652, 4, 1),
-(9, '2018-08-01 10:40:00', 1.352, 4, 2),
-(10, '2018-08-01 10:50:00', 3.352, 4, 3),
-(11, '2018-08-01 11:00:00', 2.652, 4, 4),
-(12, '2018-08-01 05:30:00', 2.45, 5, 1),
-(13, '2018-08-01 06:00:00', 1.32, 5, 2);
+INSERT INTO `records` (`id`, `time`, `temp`, `delivery_id`, `id_data`, `latitude`, `longitude`) VALUES
+(1, '2018-08-01 10:00:00', 1.352, 2, 1, NULL, NULL),
+(2, '2018-08-01 10:01:00', 1.352, 2, 2, NULL, NULL),
+(3, '2018-08-01 10:02:00', 3.352, 2, 3, NULL, NULL),
+(4, '2018-08-01 10:03:00', 2.652, 2, 4, NULL, NULL),
+(5, '2018-08-01 10:04:00', 1.352, 2, 5, NULL, NULL),
+(6, '2018-08-01 10:05:00', 3.352, 2, 6, NULL, NULL),
+(7, '2018-08-01 10:06:00', 2.652, 2, 7, NULL, NULL),
+(8, '2018-08-01 10:30:00', 2.652, 4, 1, NULL, NULL),
+(9, '2018-08-01 10:30:32', 1.352, 4, 2, NULL, NULL),
+(10, '2018-08-01 10:31:00', 3.352, 4, 3, NULL, NULL),
+(11, '2018-08-01 10:31:30', 2.652, 4, 4, NULL, NULL),
+(12, '2018-08-01 10:32:00', 2.45, 4, 5, NULL, NULL),
+(13, '2018-08-01 05:50:00', 1.32, 5, 1, NULL, NULL),
+(14, '2018-08-01 10:32:30', 2.46, 4, 6, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -211,7 +214,7 @@ ALTER TABLE `devices`
 -- AUTO_INCREMENT de la tabla `records`
 --
 ALTER TABLE `records`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
