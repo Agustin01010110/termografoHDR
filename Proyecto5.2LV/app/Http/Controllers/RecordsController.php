@@ -29,7 +29,7 @@ class RecordsController extends Controller
              echo "SUCCESS";
 
           } catch (\Exception $e) {
-            return $request->id_data;
+            return("ERROR")->with($request->id_data);
             echo $e->getMessage();
           }
       }

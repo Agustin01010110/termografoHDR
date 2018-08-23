@@ -34,7 +34,7 @@ class DevicesController extends Controller
                 $device->save();
                 $delivery->save();
 
-                echo $delivery->id;
+                echo "viaje,$delivery->id";
             }
             catch(\Exception $e){
                 echo 'ERROR: ';
@@ -58,7 +58,7 @@ class DevicesController extends Controller
                 $delivery->save();
 
 
-                echo $delivery->id;
+                echo "viaje,$delivery->id";
             }
             catch(\Exception $e){
                 echo 'ERROR: ';

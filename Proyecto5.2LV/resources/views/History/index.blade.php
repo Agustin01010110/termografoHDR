@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('Layouts.app')
 @section('content')
 
 <form class="col-sm-6" action="{{ route('fetch-between-dates') }}" method="get" onsubmit = "false">

@@ -23,12 +23,12 @@ class DeliveriesController extends Controller
         try
         {
 
-          $ndel->start_loc =  $request->start_loc;
-        	$ndel->end_loc =  $request->end_loc;
+          $ndel->start_loc  =  $request->start_loc;
+        	$ndel->end_loc    =  $request->end_loc;
         	$ndel->start_date =  $request->start_date;
-        	$ndel->end_date =  $request->end_date;
+        	$ndel->end_date   =  $request->end_date;
         	$ndel->vehicle_id =  $request->vehicle_id;
-        	$ndel->device_id =  $request->device_id;
+        	$ndel->device_id  =  $request->device_id;
 
           $ndel->save();
 
@@ -167,7 +167,7 @@ class DeliveriesController extends Controller
                  'update'   =>$last_delivery_config->updt_time
                ];
 
-      return $config;
+      return("configuracion")->with($config);
     }
 
 
